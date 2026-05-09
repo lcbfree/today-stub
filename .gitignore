@@ -11,3 +11,6 @@ coverage/
 
 tmp/
 temp/
+
+project.private.config.json
+miniprogram_npm/

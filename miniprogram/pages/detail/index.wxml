@@ -1,0 +1,15 @@
+<view class="page-shell detail-page">
+  <view class="page-title">存根详情</view>
+
+  <view wx:if="{{missing}}" class="soft-card">
+    <view class="page-subtitle">这张存根已经不在本地了。</view>
+  </view>
+
+  <view wx:if="{{record}}" class="soft-card">
+    <view class="detail-date">{{record.date}}</view>
+    <view class="detail-title">{{record.statusLabel}}</view>
+    <view class="detail-copy">{{record.selfSentence || record.verdict}}</view>
+    <view class="muted-text">能量 {{record.energy}} / 情绪 {{record.emotionBalance}}</view>
+    <button class="ghost-button action" bindtap="confirmDelete">删除这张</button>
+  </view>
+</view>

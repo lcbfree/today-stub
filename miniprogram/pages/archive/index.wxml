@@ -1,0 +1,17 @@
+<view class="page-shell archive-page">
+  <view class="page-title">存档墙</view>
+  <view class="page-subtitle">过去的今天，会慢慢在这里排好。</view>
+
+  <view wx:if="{{!records.length}}" class="soft-card empty-card">
+    <view class="empty-title">第一张存根，会从今天开始。</view>
+    <button class="primary-button action" bindtap="goToday">生成今日存根</button>
+  </view>
+
+  <block wx:for="{{records}}" wx:key="id">
+    <view class="stub-card" data-id="{{item.id}}" bindtap="openDetail">
+      <view class="stub-date">{{item.date}}</view>
+      <view class="stub-title">{{item.statusLabel}}</view>
+      <view class="stub-copy">{{item.selfSentence || item.verdict}}</view>
+    </view>
+  </block>
+</view>

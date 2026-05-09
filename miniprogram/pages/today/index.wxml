@@ -1,0 +1,25 @@
+<view class="page-shell today-page">
+  <view class="top-row">
+    <view>
+      <view class="page-title">今日存根</view>
+      <view class="page-subtitle">把今天留个底</view>
+    </view>
+    <button class="settings-link" bindtap="goSettings">设置</button>
+  </view>
+
+  <view class="soft-card phrase-card">
+    <text class="muted-text">今天不用解释太多。</text>
+  </view>
+
+  <view class="soft-card">
+    <view class="section-title">今日生成</view>
+    <view class="placeholder-line">状态、情绪、能量和生活痕迹会在下一步接入。</view>
+    <button class="primary-button action" bindtap="goPreview">生成存根</button>
+    <button class="ghost-button action" bindtap="goArchive">查看存档墙</button>
+  </view>
+
+  <view wx:if="{{todayRecords.length}}" class="soft-card">
+    <view class="section-title">今天已经留下 {{todayRecords.length}} 张</view>
+    <view class="placeholder-line">可以继续生成，也可以去存档墙回看。</view>
+  </view>
+</view>

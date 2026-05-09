@@ -1,0 +1,15 @@
+<view class="page-shell settings-page">
+  <view class="page-title">设置与隐私</view>
+  <view class="page-subtitle">V1 默认只把记录保存在本机。</view>
+
+  <view class="soft-card">
+    <view class="section-title">本地保存</view>
+    <view class="body-text">今日存根第一版不需要手机号登录，不上传云端，也不做公开社区。保存图片时才会请求相册相关权限。</view>
+  </view>
+
+  <view class="soft-card">
+    <view class="section-title">本地数据</view>
+    <view class="body-text">清空后，存档墙里的结构化记录会被删除；已经保存到相册的图片不会被删除。</view>
+    <button class="ghost-button action" bindtap="clearLocalData">清空本地存根</button>
+  </view>
+</view>

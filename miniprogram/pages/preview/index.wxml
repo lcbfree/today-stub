@@ -1,0 +1,22 @@
+<view class="page-shell preview-page">
+  <view class="page-title">票根预览</view>
+  <view class="page-subtitle">先放一个可运行预览壳，后面接入正式票根渲染。</view>
+
+  <view class="receipt-card" wx:if="{{record}}">
+    <view class="receipt-kicker">DAILY LIFE STUB</view>
+    <view class="receipt-title">今日存根</view>
+    <view class="receipt-row">
+      <text>日期</text>
+      <text>{{record.date}}</text>
+    </view>
+    <view class="receipt-row">
+      <text>状态</text>
+      <text>{{record.statusLabel}}</text>
+    </view>
+    <view class="receipt-copy">{{record.selfSentence || record.verdict}}</view>
+    <view class="receipt-stamp">{{record.verdict}}</view>
+  </view>
+
+  <button class="primary-button action" bindtap="saveToArchive">存入今天</button>
+  <button class="ghost-button action" bindtap="goArchive">去存档墙</button>
+</view>

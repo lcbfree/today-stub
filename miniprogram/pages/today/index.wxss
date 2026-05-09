@@ -1,0 +1,33 @@
+.top-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24rpx;
+}
+
+.settings-link {
+  padding: 12rpx 18rpx;
+  color: #67564a;
+  font-size: 26rpx;
+}
+
+.phrase-card {
+  margin-top: 34rpx;
+}
+
+.section-title {
+  color: #352a22;
+  font-size: 32rpx;
+  font-weight: 700;
+}
+
+.placeholder-line {
+  margin-top: 16rpx;
+  color: #806f63;
+  font-size: 26rpx;
+  line-height: 1.5;
+}
+
+.action {
+  margin-top: 24rpx;
+}

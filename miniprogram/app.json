@@ -1,0 +1,18 @@
+{
+  "pages": [
+    "pages/today/index",
+    "pages/preview/index",
+    "pages/archive/index",
+    "pages/detail/index",
+    "pages/settings/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "今日存根",
+    "navigationBarBackgroundColor": "#F8EEE4",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#F8EEE4",
+    "backgroundTextStyle": "light"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

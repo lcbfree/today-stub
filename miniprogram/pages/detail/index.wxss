@@ -1,0 +1,20 @@
+.detail-date {
+  color: #8b7b70;
+  font-size: 24rpx;
+}
+
+.detail-title {
+  margin-top: 12rpx;
+  font-size: 36rpx;
+  font-weight: 800;
+}
+
+.detail-copy {
+  margin: 24rpx 0;
+  font-size: 30rpx;
+  line-height: 1.6;
+}
+
+.action {
+  margin-top: 30rpx;
+}
