@@ -1,0 +1,685 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>今日存根 v1 产品原型</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <svg aria-hidden="true" class="icon-sprite">
+      <symbol id="icon-calendar" viewBox="0 0 24 24">
+        <path d="M8 2v4M16 2v4M3.5 9.2h17M5.8 4.5h12.4a2.3 2.3 0 0 1 2.3 2.3v11.4a2.3 2.3 0 0 1-2.3 2.3H5.8a2.3 2.3 0 0 1-2.3-2.3V6.8a2.3 2.3 0 0 1 2.3-2.3Z" />
+      </symbol>
+      <symbol id="icon-archive" viewBox="0 0 24 24">
+        <path d="M4.5 7.5h15M6.2 7.5v11a2 2 0 0 0 2 2h7.6a2 2 0 0 0 2-2v-11M7.4 3.5h9.2a2 2 0 0 1 2 2v2H5.4v-2a2 2 0 0 1 2-2ZM9.4 12.2h5.2" />
+      </symbol>
+      <symbol id="icon-settings" viewBox="0 0 24 24">
+        <path d="M12 8.2a3.8 3.8 0 1 0 0 7.6 3.8 3.8 0 0 0 0-7.6ZM19.1 13.2a7.7 7.7 0 0 0 .1-1.2 7.7 7.7 0 0 0-.1-1.2l2-1.5-2-3.4-2.4 1a7.6 7.6 0 0 0-2-1.1L14.4 3h-4.8l-.4 2.8a7.6 7.6 0 0 0-2 1.1l-2.4-1-2 3.4 2 1.5a7.7 7.7 0 0 0-.1 1.2 7.7 7.7 0 0 0 .1 1.2l-2 1.5 2 3.4 2.4-1a7.6 7.6 0 0 0 2 1.1l.4 2.8h4.8l.4-2.8a7.6 7.6 0 0 0 2-1.1l2.4 1 2-3.4-2-1.5Z" />
+      </symbol>
+      <symbol id="icon-download" viewBox="0 0 24 24">
+        <path d="M12 3.5v11M7.8 10.8 12 15l4.2-4.2M5 19.5h14" />
+      </symbol>
+      <symbol id="icon-shuffle" viewBox="0 0 24 24">
+        <path d="M4 7.5h2.4c2.8 0 3.8 9 6.6 9H20M17 13.5l3 3-3 3M4 16.5h2.4c1.2 0 2-.8 2.7-2M14.7 8.2c.6-.5 1.3-.7 2.3-.7h3M17 4.5l3 3-3 3" />
+      </symbol>
+      <symbol id="icon-save" viewBox="0 0 24 24">
+        <path d="M5.6 3.8h10.8l2 2v14.4H5.6V3.8ZM8.2 3.8v5.6h7.2V3.8M8.4 20.2v-6.1h7.2v6.1" />
+      </symbol>
+      <symbol id="icon-trash" viewBox="0 0 24 24">
+        <path d="M4.5 6.6h15M9.4 6.6V4h5.2v2.6M7 6.6l.8 13h8.4l.8-13M10.2 10.1v6M13.8 10.1v6" />
+      </symbol>
+      <symbol id="icon-left" viewBox="0 0 24 24">
+        <path d="m15 5-7 7 7 7" />
+      </symbol>
+      <symbol id="icon-close" viewBox="0 0 24 24">
+        <path d="M6 6l12 12M18 6 6 18" />
+      </symbol>
+      <symbol id="icon-image" viewBox="0 0 24 24">
+        <path d="M5.8 4.5h12.4a2.3 2.3 0 0 1 2.3 2.3v10.4a2.3 2.3 0 0 1-2.3 2.3H5.8a2.3 2.3 0 0 1-2.3-2.3V6.8a2.3 2.3 0 0 1 2.3-2.3ZM7.3 15l3.1-3 2.4 2.2 2-2.2 3.9 4.5M8.6 8.8h.1" />
+      </symbol>
+      <symbol id="icon-shield" viewBox="0 0 24 24">
+        <path d="M12 3.3 19 6v5.4c0 4.2-2.8 7.7-7 9.3-4.2-1.6-7-5.1-7-9.3V6l7-2.7Z" />
+      </symbol>
+    </svg>
+
+    <main class="prototype">
+      <aside class="meta-panel">
+        <div>
+          <p class="kicker">v1 prototype</p>
+          <h1>今日存根</h1>
+          <p class="summary">把今天压缩成一张可保存的生活凭证。第一版聚焦生成、保存、本地存档，不登录、不支付、不上云。</p>
+        </div>
+
+        <nav class="screen-nav" aria-label="页面清单">
+          <a href="#screen-today">01 今日生成</a>
+          <a href="#screen-preview">02 票根预览</a>
+          <a href="#screen-saved">03 保存反馈</a>
+          <a href="#screen-archive">04 存档墙</a>
+          <a href="#screen-empty">05 存档空态</a>
+          <a href="#screen-detail">06 存根详情</a>
+          <a href="#screen-settings">07 设置隐私</a>
+          <a href="#screen-permission">08 授权失败</a>
+        </nav>
+
+        <section class="design-notes" aria-label="设计约束">
+          <h2>v1 边界</h2>
+          <p>移动端优先，票根为主视觉；历史不做统计报表；所有用户内容默认留在本地。</p>
+        </section>
+      </aside>
+
+      <section class="screen-board" aria-label="v1 页面 UI 原型">
+        <article class="screen-card" id="screen-today">
+          <div class="screen-label">
+            <span>01</span>
+            <div>
+              <h2>今日生成</h2>
+              <p>打开即填写，也支持极短路径。</p>
+            </div>
+          </div>
+          <div class="phone">
+            <div class="phone-screen app-screen today-screen">
+              <header class="app-header">
+                <div>
+                  <p class="date-line">2026.05.09 周六</p>
+                  <h3>把今天留个底</h3>
+                </div>
+                <button class="icon-button" aria-label="进入设置">
+                  <svg><use href="#icon-settings"></use></svg>
+                </button>
+              </header>
+
+              <section class="today-hero">
+                <div>
+                  <p class="eyebrow">TODAY STUB</p>
+                  <h4>今日存根</h4>
+                </div>
+                <span class="stamp">本地保存</span>
+              </section>
+
+              <section class="comfort-strip">
+                <span class="tiny-leaf" aria-hidden="true"></span>
+                <p>候选句：今天不用解释太多</p>
+                <button>编辑这句</button>
+              </section>
+
+              <section class="input-section">
+                <div class="field-group">
+                  <label>今天，你更接近哪种状态？</label>
+                  <div class="status-card-row">
+                    <button class="status-card is-active">
+                      <i class="status-icon tired"></i>
+                      <span>有点耗尽</span>
+                    </button>
+                    <button class="status-card">
+                      <i class="status-icon tea-cup"></i>
+                      <span>平静</span>
+                    </button>
+                    <button class="status-card">
+                      <i class="status-icon flower"></i>
+                      <span>被治愈</span>
+                    </button>
+                    <button class="status-card">
+                      <i class="status-icon cloud"></i>
+                      <span>普通但还行</span>
+                    </button>
+                  </div>
+                  <p class="state-note">推荐只做参考，你写下的话会放在票根最上面。</p>
+                </div>
+
+                <div class="expressive-metrics">
+                  <div class="metric-card emotion-card">
+                    <div class="metric-head">
+                      <label>情绪余额 <b>?</b></label>
+                      <strong>0</strong>
+                    </div>
+                    <div class="emotion-meter">
+                      <span>-5</span>
+                      <div class="meter-line"><i></i></div>
+                      <span>+5</span>
+                    </div>
+                    <div class="meter-labels">
+                      <small>低落透支</small>
+                      <small>平衡</small>
+                      <small>满满当当</small>
+                    </div>
+                  </div>
+
+                  <div class="metric-card energy-card">
+                    <div class="metric-head">
+                      <label>能量值 <b>?</b></label>
+                      <strong>50%</strong>
+                    </div>
+                    <div class="battery-row">
+                      <i></i>
+                      <i></i>
+                      <i class="is-active"></i>
+                      <i></i>
+                      <i></i>
+                    </div>
+                    <div class="meter-labels">
+                      <small>低电量</small>
+                      <small>中等</small>
+                      <small>满格</small>
+                    </div>
+                  </div>
+                </div>
+
+                <section class="life-modules">
+                  <div class="module-head">
+                    <span>生活痕迹</span>
+                    <button>添加模块</button>
+                  </div>
+                  <div class="module-chip-row">
+                    <button class="module-chip is-active">睡眠</button>
+                    <button class="module-chip is-active">饮品</button>
+                    <button class="module-chip is-active">小花费</button>
+                    <button class="module-chip">小确幸</button>
+                  </div>
+                  <div class="module-list">
+                    <div><i>睡眠</i><strong>6.5h · 断断续续</strong></div>
+                    <div><i>饮品</i><strong>热拿铁</strong></div>
+                    <div><i>小花费</i><strong>给自己买了花</strong></div>
+                  </div>
+                </section>
+
+                <label class="text-field hero-write">
+                  <span>今天最想留下的一句话</span>
+                  <textarea>今天有点累，但我还是把自己带到了晚上。</textarea>
+                </label>
+
+                <label class="text-field">
+                  <span>今天的证据</span>
+                  <textarea>按时吃了晚饭，也推进了一点。</textarea>
+                </label>
+
+                <div class="optional-row">
+                  <span>补充一点，可不填</span>
+                  <button>展开</button>
+                </div>
+              </section>
+
+              <div class="comfort-object lamp" aria-label="今日小物件：一盏晚灯">
+                <i></i>
+                <span></span>
+              </div>
+
+              <div class="sticky-actions">
+                <button class="secondary-action">
+                  <svg><use href="#icon-shuffle"></use></svg>
+                  不用推荐
+                </button>
+                <button class="primary-action">生成存根</button>
+              </div>
+
+              <nav class="tabbar">
+                <button class="tab is-active">
+                  <svg><use href="#icon-calendar"></use></svg>
+                  今日
+                </button>
+                <button class="tab">
+                  <svg><use href="#icon-archive"></use></svg>
+                  存档
+                </button>
+              </nav>
+            </div>
+          </div>
+        </article>
+
+        <article class="screen-card" id="screen-preview">
+          <div class="screen-label">
+            <span>02</span>
+            <div>
+              <h2>票根预览</h2>
+              <p>确认内容、切主题、保存图片。</p>
+            </div>
+          </div>
+          <div class="phone">
+            <div class="phone-screen app-screen preview-screen">
+              <header class="app-header compact">
+                <button class="icon-button" aria-label="返回今日生成">
+                  <svg><use href="#icon-left"></use></svg>
+                </button>
+                <h3>票根预览</h3>
+                <button class="icon-button" aria-label="随机一句">
+                  <svg><use href="#icon-shuffle"></use></svg>
+                </button>
+              </header>
+
+              <section class="ticket theme-thermal">
+                <div class="ticket-top">
+                  <p>DAILY LIFE STUB</p>
+                  <span>DAY-20260509-042</span>
+                </div>
+                <h4>今日存根</h4>
+                <div class="dashed"></div>
+                <dl class="ticket-lines">
+                  <div><dt>日期</dt><dd>2026.05.09</dd></div>
+                  <div><dt>今日状态</dt><dd>有点耗尽</dd></div>
+                  <div><dt>情绪余额</dt><dd>回暖</dd></div>
+                  <div><dt>能量值</dt><dd>42/100</dd></div>
+                </dl>
+
+                <div class="receipt-section">
+                  <span>LIFE TRACE</span>
+                  <dl>
+                    <div><dt>睡眠</dt><dd>6.5h / 断断续续</dd></div>
+                    <div><dt>饮品</dt><dd>热拿铁</dd></div>
+                    <div><dt>小花费</dt><dd>给自己买了花</dd></div>
+                  </dl>
+                </div>
+
+                <div class="user-quote">
+                  <span>我写下的今天</span>
+                  <p>今天有点累，但我还是把自己带到了晚上。</p>
+                </div>
+
+                <div class="ticket-block">
+                  <span>今日证据</span>
+                  <p>按时吃了晚饭，也推进了一点。</p>
+                </div>
+                <div class="ticket-stamp">今天也算数</div>
+                <div class="ticket-object tea" aria-label="今日小物件：一杯热茶">
+                  <i></i>
+                  <span></span>
+                </div>
+                <div class="verdict">
+                  <small>候选短语</small>
+                  <strong>这一天，允许被保存。</strong>
+                </div>
+                <div class="barcode" aria-hidden="true"></div>
+              </section>
+
+              <section class="theme-panel">
+                <p>票根主题</p>
+                <div class="theme-row">
+                  <button class="theme-chip is-active"><i class="swatch thermal"></i>热敏纸</button>
+                  <button class="theme-chip"><i class="swatch night"></i>晚间</button>
+                  <button class="theme-chip"><i class="swatch exhibit"></i>展览票</button>
+                </div>
+              </section>
+
+              <div class="sticky-actions">
+                <button class="secondary-action">
+                  <svg><use href="#icon-save"></use></svg>
+                  存入今天
+                </button>
+                <button class="primary-action">
+                  <svg><use href="#icon-download"></use></svg>
+                  保存图片
+                </button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="screen-card" id="screen-saved">
+          <div class="screen-label">
+            <span>03</span>
+            <div>
+              <h2>保存反馈</h2>
+              <p>相册保存成功后的轻反馈。</p>
+            </div>
+          </div>
+          <div class="phone">
+            <div class="phone-screen app-screen preview-screen">
+              <header class="app-header compact">
+                <button class="icon-button" aria-label="返回">
+                  <svg><use href="#icon-left"></use></svg>
+                </button>
+                <h3>票根预览</h3>
+                <span class="header-space"></span>
+              </header>
+
+              <section class="ticket theme-night">
+                <div class="ticket-top">
+                  <p>TODAY STUB</p>
+                  <span>DAY-20260509-043</span>
+                </div>
+                <h4>今日存根</h4>
+                <div class="dashed"></div>
+                <dl class="ticket-lines">
+                  <div><dt>今日状态</dt><dd>想早点睡</dd></div>
+                  <div><dt>情绪余额</dt><dd>持平</dd></div>
+                  <div><dt>能量值</dt><dd>36/100</dd></div>
+                </dl>
+                <div class="ticket-block">
+                  <span>今日证据</span>
+                  <p>到这里就可以了，剩下的交给睡眠。</p>
+                </div>
+                <div class="barcode" aria-hidden="true"></div>
+              </section>
+
+              <div class="modal-backdrop">
+                <div class="sheet">
+                  <button class="icon-button close" aria-label="关闭">
+                    <svg><use href="#icon-close"></use></svg>
+                  </button>
+                  <div class="success-mark">
+                    <svg><use href="#icon-image"></use></svg>
+                  </div>
+                  <h4>已保存到相册</h4>
+                  <p>好了，今天被收好了。最重要的是你写下的那句话，已经留在票根里。</p>
+                  <div class="button-row">
+                    <button class="secondary-action">再结一次</button>
+                    <button class="primary-action">查看存档墙</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="screen-card" id="screen-archive">
+          <div class="screen-label">
+            <span>04</span>
+            <div>
+              <h2>存档墙</h2>
+              <p>按月回看，不做情绪统计。</p>
+            </div>
+          </div>
+          <div class="phone">
+            <div class="phone-screen app-screen archive-screen">
+              <header class="app-header">
+                <div>
+                  <p class="date-line">2026 年 5 月</p>
+                  <h3>存档墙</h3>
+                </div>
+                <button class="icon-button" aria-label="设置">
+                  <svg><use href="#icon-settings"></use></svg>
+                </button>
+              </header>
+
+              <section class="month-card">
+                <div class="month-head">
+                  <button class="month-arrow">‹</button>
+                  <strong>五月</strong>
+                  <button class="month-arrow">›</button>
+                </div>
+                <div class="weekday-row">
+                  <span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span>
+                </div>
+                <div class="calendar-grid">
+                  <span></span><span></span><span></span><button>1</button><button>2</button><button class="has-dot">3</button><button>4</button>
+                  <button>5</button><button class="has-dot">6</button><button>7</button><button>8</button><button class="is-today has-dot">9</button><button>10</button><button>11</button>
+                  <button>12</button><button>13</button><button>14</button><button>15</button><button>16</button><button>17</button><button>18</button>
+                </div>
+              </section>
+
+              <section class="archive-list">
+                <article class="archive-item stack">
+                  <div>
+                    <time>05.09</time>
+                    <h4>今日存根 x 3</h4>
+                    <p>睡眠 6.5h · 热拿铁 · 小花费</p>
+                    <em>今天也算数</em>
+                  </div>
+                  <span class="mini-stub">STUB</span>
+                </article>
+                <article class="archive-item">
+                  <div>
+                    <time>05.06</time>
+                    <h4>今天没有满分，但有证据。</h4>
+                    <p>普通但还行 · 持平 · 58/100</p>
+                  </div>
+                  <span class="mini-stub muted">STUB</span>
+                </article>
+                <article class="archive-item">
+                  <div>
+                    <time>05.03</time>
+                    <h4>你确实经过了今天。</h4>
+                    <p>平静 · 回暖 · 64/100</p>
+                  </div>
+                  <span class="mini-stub green">STUB</span>
+                </article>
+              </section>
+
+              <nav class="tabbar">
+                <button class="tab">
+                  <svg><use href="#icon-calendar"></use></svg>
+                  今日
+                </button>
+                <button class="tab is-active">
+                  <svg><use href="#icon-archive"></use></svg>
+                  存档
+                </button>
+              </nav>
+            </div>
+          </div>
+        </article>
+
+        <article class="screen-card" id="screen-empty">
+          <div class="screen-label">
+            <span>05</span>
+            <div>
+              <h2>存档空态</h2>
+              <p>第一次进入历史页。</p>
+            </div>
+          </div>
+          <div class="phone">
+            <div class="phone-screen app-screen archive-screen">
+              <header class="app-header">
+                <div>
+                  <p class="date-line">2026 年 5 月</p>
+                  <h3>存档墙</h3>
+                </div>
+                <button class="icon-button" aria-label="设置">
+                  <svg><use href="#icon-settings"></use></svg>
+                </button>
+              </header>
+
+              <section class="month-card faded">
+                <div class="month-head">
+                  <button class="month-arrow">‹</button>
+                  <strong>五月</strong>
+                  <button class="month-arrow">›</button>
+                </div>
+                <div class="weekday-row">
+                  <span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span>
+                </div>
+                <div class="calendar-grid">
+                  <span></span><span></span><span></span><button>1</button><button>2</button><button>3</button><button>4</button>
+                  <button>5</button><button>6</button><button>7</button><button>8</button><button class="is-today">9</button><button>10</button><button>11</button>
+                </div>
+              </section>
+
+              <section class="empty-state">
+                <div class="empty-ticket">
+                  <span></span>
+                  <strong>TODAY STUB</strong>
+                  <i></i>
+                </div>
+                <h4>今天还没有留下存根</h4>
+                <p>先给今天做一次轻轻的结算。</p>
+                <button class="primary-action full">去生成</button>
+              </section>
+
+              <nav class="tabbar">
+                <button class="tab">
+                  <svg><use href="#icon-calendar"></use></svg>
+                  今日
+                </button>
+                <button class="tab is-active">
+                  <svg><use href="#icon-archive"></use></svg>
+                  存档
+                </button>
+              </nav>
+            </div>
+          </div>
+        </article>
+
+        <article class="screen-card" id="screen-detail">
+          <div class="screen-label">
+            <span>06</span>
+            <div>
+              <h2>存根详情</h2>
+              <p>回看单张存根，可再次保存或删除。</p>
+            </div>
+          </div>
+          <div class="phone">
+            <div class="phone-screen app-screen detail-screen">
+              <header class="app-header compact">
+                <button class="icon-button" aria-label="返回存档墙">
+                  <svg><use href="#icon-left"></use></svg>
+                </button>
+                <h3>05.09 的存根</h3>
+                <button class="icon-button danger" aria-label="删除">
+                  <svg><use href="#icon-trash"></use></svg>
+                </button>
+              </header>
+
+              <section class="ticket theme-exhibit">
+                <div class="ticket-top">
+                  <p>DAILY LIFE STUB</p>
+                  <span>NO.042</span>
+                </div>
+                <h4>普通但还行的一天</h4>
+                <div class="dashed"></div>
+                <div class="receipt-section">
+                  <span>LIFE TRACE</span>
+                  <dl>
+                    <div><dt>睡眠</dt><dd>7h / 还不错</dd></div>
+                    <div><dt>饮品</dt><dd>茉莉花茶</dd></div>
+                    <div><dt>小花费</dt><dd>一本小书</dd></div>
+                  </dl>
+                </div>
+                <div class="ticket-block">
+                  <span>保留下的展品</span>
+                  <p>晚饭后的一小段安静，一点没有被催走的耐心。</p>
+                </div>
+                <div class="ticket-block">
+                  <span>今日证据</span>
+                  <p>按时吃了晚饭，也把拖了很久的事推进了一点。</p>
+                </div>
+                <div class="verdict exhibit">
+                  <small>策展语</small>
+                  <strong>今天没有满分，但有证据。</strong>
+                </div>
+                <div class="ticket-stamp exhibit-stamp">不必满分</div>
+              </section>
+
+              <section class="detail-fields">
+                <h4>原始内容</h4>
+                <dl>
+                  <div><dt>创建时间</dt><dd>2026.05.09 22:41</dd></div>
+                  <div><dt>同步状态</dt><dd>local_only</dd></div>
+                  <div><dt>想对今天说</dt><dd>到这里就可以了。</dd></div>
+                </dl>
+              </section>
+
+              <div class="sticky-actions">
+                <button class="secondary-action">再结一次</button>
+                <button class="primary-action">
+                  <svg><use href="#icon-download"></use></svg>
+                  保存图片
+                </button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="screen-card" id="screen-settings">
+          <div class="screen-label">
+            <span>07</span>
+            <div>
+              <h2>设置隐私</h2>
+              <p>说明本地存储、相册权限与清空数据。</p>
+            </div>
+          </div>
+          <div class="phone">
+            <div class="phone-screen app-screen settings-screen">
+              <header class="app-header compact">
+                <button class="icon-button" aria-label="返回">
+                  <svg><use href="#icon-left"></use></svg>
+                </button>
+                <h3>设置</h3>
+                <span class="header-space"></span>
+              </header>
+
+              <section class="privacy-card">
+                <div class="privacy-icon">
+                  <svg><use href="#icon-shield"></use></svg>
+                </div>
+                <h4>内容默认保存在本机</h4>
+                <p>v1 不上传服务器，不读取通讯录、定位、麦克风或摄像头。保存图片时才会申请相册权限。</p>
+              </section>
+
+              <section class="settings-list">
+                <button>
+                  <span>隐私说明</span>
+                  <i>本地保存</i>
+                </button>
+                <button>
+                  <span>清空本地数据</span>
+                  <i>谨慎操作</i>
+                </button>
+                <button>
+                  <span>反馈入口</span>
+                  <i>微信会话</i>
+                </button>
+                <button>
+                  <span>版本信息</span>
+                  <i>v1.0.0</i>
+                </button>
+              </section>
+
+              <section class="notice-box">
+                <h4>未来开启云同步时</h4>
+                <p>会先询问是否同步本机历史存根，不会静默上传。</p>
+              </section>
+            </div>
+          </div>
+        </article>
+
+        <article class="screen-card" id="screen-permission">
+          <div class="screen-label">
+            <span>08</span>
+            <div>
+              <h2>授权失败</h2>
+              <p>保存相册被拒绝后的处理。</p>
+            </div>
+          </div>
+          <div class="phone">
+            <div class="phone-screen app-screen preview-screen">
+              <header class="app-header compact">
+                <button class="icon-button" aria-label="返回">
+                  <svg><use href="#icon-left"></use></svg>
+                </button>
+                <h3>票根预览</h3>
+                <span class="header-space"></span>
+              </header>
+
+              <section class="ticket theme-thermal compact-ticket">
+                <div class="ticket-top">
+                  <p>TODAY STUB</p>
+                  <span>DAY-20260509-044</span>
+                </div>
+                <h4>今日存根</h4>
+                <div class="dashed"></div>
+                <div class="ticket-block">
+                  <span>最终判定</span>
+                  <p>这张存根证明，你确实经过了今天。</p>
+                </div>
+                <div class="barcode" aria-hidden="true"></div>
+              </section>
+
+              <div class="modal-backdrop">
+                <div class="sheet alert">
+                  <button class="icon-button close" aria-label="关闭">
+                    <svg><use href="#icon-close"></use></svg>
+                  </button>
+                  <h4>需要相册权限</h4>
+                  <p>开启后才能把票根保存为图片。你也可以先存入本地存档墙。</p>
+                  <div class="button-row">
+                    <button class="secondary-action">先存入今天</button>
+                    <button class="primary-action">去开启</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>
