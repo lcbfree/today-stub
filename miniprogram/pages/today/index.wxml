@@ -8,17 +8,83 @@
   </view>
 
   <view class="soft-card phrase-card">
-    <text class="muted-text">今天不用解释太多。</text>
+    <text class="muted-text">{{openingPhraseText}}</text>
+    <button class="text-button" data-scene="opening" bindtap="refreshPhrase">换一句</button>
   </view>
 
-  <view class="soft-card">
-    <view class="section-title">今日生成</view>
-    <view class="placeholder-line">状态、情绪、能量和生活痕迹会在下一步接入。</view>
-    <button class="primary-button action" bindtap="goPreview">生成存根</button>
-    <button class="ghost-button action" bindtap="goArchive">查看存档墙</button>
-  </view>
+  <block wx:if="{{draft}}">
+    <view class="soft-card section-card">
+      <view class="section-title">今天的状态</view>
+      <status-picker options="{{statuses}}" value="{{draft.statusId}}" bind:change="onStatusChange" />
+      <view class="status-feedback">
+        <text>{{statusPhraseText}}</text>
+        <button class="text-button" data-scene="status_selected" bindtap="refreshPhrase">换一句</button>
+      </view>
+    </view>
 
-  <view wx:if="{{todayRecords.length}}" class="soft-card">
+    <view class="metrics-grid">
+      <emotion-meter value="{{draft.emotionBalance}}" bind:change="onEmotionChange" />
+      <energy-battery value="{{draft.energy}}" bind:change="onEnergyChange" />
+    </view>
+
+    <view class="soft-card section-card">
+      <view class="section-title">今天最想留下的一句话</view>
+      <textarea
+        class="soft-textarea main-sentence"
+        value="{{draft.selfSentence}}"
+        placeholder="今天有点累，但我还是把自己带到了晚上。"
+        maxlength="80"
+        data-field="selfSentence"
+        bindinput="onTextInput"
+      />
+      <view class="helper-row">
+        <text>不写也可以，系统会用候选短语兜底。</text>
+        <button class="text-button" data-scene="verdict" bindtap="refreshPhrase">换候选</button>
+      </view>
+      <view class="candidate-line">{{verdictText}}</view>
+    </view>
+
+    <view class="soft-card section-card">
+      <view class="section-title">今天的证据</view>
+      <input
+        class="soft-input"
+        value="{{draft.proof}}"
+        placeholder="按时吃了晚饭，也推进了一点。"
+        maxlength="40"
+        data-field="proof"
+        bindinput="onTextInput"
+      />
+    </view>
+
+    <view class="soft-card section-card">
+      <view class="section-title">生活痕迹</view>
+      <view class="section-note">睡眠、饮品、小花费、小确幸都可以加，也可以一个都不加。</view>
+      <life-module-editor
+        definitions="{{lifeModuleDefinitions}}"
+        modules="{{draft.lifeModules}}"
+        bind:change="onLifeModulesChange"
+      />
+    </view>
+
+    <view class="soft-card section-card">
+      <view class="section-title">补充一点，可不填</view>
+      <input
+        class="soft-input"
+        value="{{draft.optionalNote}}"
+        placeholder="晚饭后的一小段安静。"
+        maxlength="40"
+        data-field="optionalNote"
+        bindinput="onTextInput"
+      />
+    </view>
+
+    <view class="action-panel">
+      <button class="primary-button action" bindtap="goPreview">生成存根</button>
+      <button class="ghost-button action" bindtap="goArchive">查看存档墙</button>
+    </view>
+  </block>
+
+  <view wx:if="{{todayRecords.length}}" class="soft-card section-card">
     <view class="section-title">今天已经留下 {{todayRecords.length}} 张</view>
     <view class="placeholder-line">可以继续生成，也可以去存档墙回看。</view>
   </view>

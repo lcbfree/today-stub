@@ -33,6 +33,19 @@
   line-height: 1.6;
 }
 
+.trace-block {
+  margin-top: 28rpx;
+  padding-top: 22rpx;
+  border-top: 1rpx dashed rgba(47, 41, 36, 0.22);
+}
+
+.receipt-proof {
+  margin-top: 18rpx;
+  color: #76685e;
+  font-size: 24rpx;
+  line-height: 1.5;
+}
+
 .receipt-stamp {
   display: inline-flex;
   margin-top: 30rpx;

@@ -13,7 +13,23 @@
       <text>状态</text>
       <text>{{record.statusLabel}}</text>
     </view>
+    <view class="receipt-row">
+      <text>情绪</text>
+      <text>{{record.emotionBalance}}</text>
+    </view>
+    <view class="receipt-row">
+      <text>能量</text>
+      <text>{{record.energy}}/100</text>
+    </view>
+    <view wx:if="{{record.lifeModules.length}}" class="trace-block">
+      <view class="receipt-kicker">LIFE TRACE</view>
+      <view wx:for="{{record.lifeModules}}" wx:key="id" class="receipt-row">
+        <text>{{item.label}}</text>
+        <text>{{item.value}}</text>
+      </view>
+    </view>
     <view class="receipt-copy">{{record.selfSentence || record.verdict}}</view>
+    <view wx:if="{{record.proof}}" class="receipt-proof">{{record.proof}}</view>
     <view class="receipt-stamp">{{record.verdict}}</view>
   </view>
 

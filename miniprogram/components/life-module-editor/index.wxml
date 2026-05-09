@@ -1,0 +1,22 @@
+<view class="life-modules">
+  <view wx:for="{{definitions}}" wx:key="id" class="module-card">
+    <view class="module-top">
+      <view>
+        <view class="module-label">{{item.label}}</view>
+        <view class="module-placeholder">{{item.placeholder}}</view>
+      </view>
+      <button class="module-toggle {{modules[index].enabled ? 'is-on' : ''}}" data-id="{{item.id}}" bindtap="toggleModule">
+        {{modules[index].enabled ? '已添加' : '添加'}}
+      </button>
+    </view>
+    <input
+      wx:if="{{modules[index].enabled}}"
+      class="module-input"
+      value="{{modules[index].value}}"
+      placeholder="{{item.placeholder}}"
+      data-id="{{item.id}}"
+      bindinput="updateValue"
+    />
+    <view wx:if="{{item.guardrail && modules[index].enabled}}" class="module-note">{{item.guardrail}}</view>
+  </view>
+</view>

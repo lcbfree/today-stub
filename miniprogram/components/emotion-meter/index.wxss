@@ -1,0 +1,24 @@
+.meter {
+  padding: 22rpx 22rpx 16rpx;
+  border-radius: 16rpx;
+  background: rgba(255, 250, 244, 0.86);
+}
+
+.meter-header {
+  display: flex;
+  justify-content: space-between;
+  color: #3d3028;
+  font-size: 26rpx;
+  font-weight: 700;
+}
+
+.meter-value {
+  color: #b85c4b;
+}
+
+.meter-scale {
+  display: flex;
+  justify-content: space-between;
+  color: #9a887a;
+  font-size: 22rpx;
+}

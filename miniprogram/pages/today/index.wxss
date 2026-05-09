@@ -12,7 +12,17 @@
 }
 
 .phrase-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20rpx;
   margin-top: 34rpx;
+}
+
+.section-card {
+  display: flex;
+  flex-direction: column;
+  gap: 22rpx;
 }
 
 .section-title {
@@ -21,11 +31,92 @@
   font-weight: 700;
 }
 
+.section-note {
+  color: #8b7b70;
+  font-size: 24rpx;
+  line-height: 1.5;
+}
+
 .placeholder-line {
   margin-top: 16rpx;
   color: #806f63;
   font-size: 26rpx;
   line-height: 1.5;
+}
+
+.status-feedback {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20rpx;
+  padding: 18rpx 20rpx;
+  border-radius: 14rpx;
+  background: #f6eadf;
+  color: #6d5649;
+  font-size: 24rpx;
+  line-height: 1.5;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18rpx;
+  margin-top: 28rpx;
+}
+
+.soft-input,
+.soft-textarea {
+  width: 100%;
+  border-radius: 16rpx;
+  background: #f7ecdf;
+  color: #3d3028;
+  font-size: 28rpx;
+}
+
+.soft-input {
+  min-height: 84rpx;
+  padding: 0 22rpx;
+}
+
+.soft-textarea {
+  min-height: 168rpx;
+  padding: 22rpx;
+  line-height: 1.55;
+}
+
+.main-sentence {
+  font-size: 30rpx;
+}
+
+.helper-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18rpx;
+  color: #8b7b70;
+  font-size: 23rpx;
+  line-height: 1.45;
+}
+
+.candidate-line {
+  padding: 18rpx 20rpx;
+  border-left: 6rpx solid #b85c4b;
+  border-radius: 12rpx;
+  background: #fff6ed;
+  color: #6d5649;
+  font-size: 24rpx;
+  line-height: 1.5;
+}
+
+.text-button {
+  flex: 0 0 auto;
+  color: #b85c4b;
+  font-size: 24rpx;
+  font-weight: 600;
+}
+
+.action-panel {
+  margin-top: 30rpx;
 }
 
 .action {

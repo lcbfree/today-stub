@@ -1,5 +1,6 @@
 const {
   getLifeModuleDefinitions,
+  getPhrase,
   getStatus,
   pickObject,
   pickPhrase,
@@ -37,7 +38,7 @@ function createInitialDraft(dateKey) {
 
 function normalizeDraft(draft) {
   const status = getStatus(draft.statusId);
-  const verdict = pickPhrase("verdict");
+  const verdict = getPhrase(draft.verdictId) || pickPhrase("verdict");
 
   return {
     ...draft,
@@ -96,8 +97,50 @@ function generateRecord(draft) {
   };
 }
 
+function updateDraftStatus(draft, statusId) {
+  const status = getStatus(statusId);
+  const statusPhrase = pickPhrase("status_selected", status.id);
+
+  return {
+    ...draft,
+    statusId: status.id,
+    emotionBalance: status.defaultEmotionBalance,
+    energy: status.defaultEnergy,
+    statusPhraseId: statusPhrase.id,
+  };
+}
+
+function refreshDraftPhrase(draft, scene) {
+  const phrase = pickPhrase(scene, draft.statusId);
+
+  if (scene === "opening") {
+    return {
+      ...draft,
+      openingPhraseId: phrase.id,
+    };
+  }
+
+  if (scene === "status_selected") {
+    return {
+      ...draft,
+      statusPhraseId: phrase.id,
+    };
+  }
+
+  if (scene === "verdict") {
+    return {
+      ...draft,
+      verdictId: phrase.id,
+    };
+  }
+
+  return draft;
+}
+
 module.exports = {
   createInitialDraft,
   generateRecord,
   normalizeDraft,
+  refreshDraftPhrase,
+  updateDraftStatus,
 };

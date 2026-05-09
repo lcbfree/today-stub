@@ -1,0 +1,13 @@
+<view class="status-grid">
+  <button
+    wx:for="{{options}}"
+    wx:key="id"
+    class="status-card {{item.id == value ? 'is-active' : ''}}"
+    data-id="{{item.id}}"
+    bindtap="selectStatus"
+  >
+    <view class="status-icon">{{item.iconText}}</view>
+    <view class="status-label">{{item.label}}</view>
+    <view class="status-desc">{{item.description}}</view>
+  </button>
+</view>

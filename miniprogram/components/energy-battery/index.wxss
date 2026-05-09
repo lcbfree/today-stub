@@ -1,0 +1,34 @@
+.energy {
+  padding: 22rpx;
+  border-radius: 16rpx;
+  background: rgba(255, 250, 244, 0.86);
+}
+
+.energy-header {
+  display: flex;
+  justify-content: space-between;
+  color: #3d3028;
+  font-size: 26rpx;
+  font-weight: 700;
+}
+
+.energy-value {
+  color: #486b63;
+}
+
+.battery {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8rpx;
+  margin-top: 18rpx;
+}
+
+.battery-cell {
+  height: 24rpx;
+  border-radius: 8rpx;
+  background: #e8d8c9;
+}
+
+.battery-cell.is-active {
+  background: #88a99a;
+}

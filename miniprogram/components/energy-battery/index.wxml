@@ -1,0 +1,10 @@
+<view class="energy">
+  <view class="energy-header">
+    <text>能量值</text>
+    <text class="energy-value">{{value}}/100</text>
+  </view>
+  <view class="battery">
+    <view wx:for="{{cells}}" wx:key="id" class="battery-cell {{item.active ? 'is-active' : ''}}"></view>
+  </view>
+  <slider min="0" max="100" step="1" value="{{value}}" activeColor="#486B63" backgroundColor="#E8D8C9" block-size="20" bindchange="changeValue" bindchanging="changeValue" />
+</view>

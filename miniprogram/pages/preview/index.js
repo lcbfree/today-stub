@@ -1,4 +1,5 @@
 const { createInitialDraft, generateRecord } = require("../../services/draft-service");
+const { getPreviewRecord } = require("../../services/preview-session");
 const { saveRecord } = require("../../services/stub-repository");
 const { formatDateKey } = require("../../utils/date");
 
@@ -9,8 +10,7 @@ Page({
   },
 
   onLoad() {
-    const draft = createInitialDraft(formatDateKey(new Date()));
-    const record = generateRecord(draft);
+    const record = getPreviewRecord() || generateRecord(createInitialDraft(formatDateKey(new Date())));
     this.setData({ record });
   },
 

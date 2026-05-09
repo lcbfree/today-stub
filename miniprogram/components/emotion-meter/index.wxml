@@ -1,0 +1,12 @@
+<view class="meter">
+  <view class="meter-header">
+    <text>情绪余额</text>
+    <text class="meter-value">{{value}}</text>
+  </view>
+  <slider min="-5" max="5" step="1" value="{{value}}" activeColor="#B85C4B" backgroundColor="#E8D8C9" block-size="20" bindchange="changeValue" bindchanging="changeValue" />
+  <view class="meter-scale">
+    <text>-5</text>
+    <text>0</text>
+    <text>+5</text>
+  </view>
+</view>

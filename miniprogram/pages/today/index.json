@@ -1,3 +1,9 @@
 {
-  "navigationBarTitleText": "今日存根"
+  "navigationBarTitleText": "今日存根",
+  "usingComponents": {
+    "status-picker": "/components/status-picker/index",
+    "emotion-meter": "/components/emotion-meter/index",
+    "energy-battery": "/components/energy-battery/index",
+    "life-module-editor": "/components/life-module-editor/index"
+  }
 }
