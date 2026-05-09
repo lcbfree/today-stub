@@ -1,0 +1,17 @@
+<view class="privacy-panel">
+  <view class="panel-card">
+    <view class="panel-title">本地保存</view>
+    <view class="panel-text">今日存根 V1 默认只把结构化记录保存在本机，不上传云端，不要求手机号登录，也不做公开社区。</view>
+  </view>
+
+  <view class="panel-card">
+    <view class="panel-title">相册权限</view>
+    <view class="panel-text">只有在你点击保存图片时，才会触发相册保存相关权限。拒绝权限后，仍然可以仅存入本地存档墙。</view>
+  </view>
+
+  <view class="panel-card">
+    <view class="panel-title">本地数据</view>
+    <view class="panel-text">当前本地存档 {{recordCount}} 张。清空后，存档墙里的结构化记录会被删除；已经保存到相册的图片不会被删除。</view>
+    <button class="clear-button" bindtap="clearData">清空本地存根</button>
+  </view>
+</view>

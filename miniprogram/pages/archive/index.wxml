@@ -4,14 +4,50 @@
 
   <view wx:if="{{!records.length}}" class="soft-card empty-card">
     <view class="empty-title">第一张存根，会从今天开始。</view>
+    <view class="empty-copy">不用写很长，先把今天轻轻留个底。</view>
     <button class="primary-button action" bindtap="goToday">生成今日存根</button>
   </view>
 
-  <block wx:for="{{records}}" wx:key="id">
-    <view class="stub-card" data-id="{{item.id}}" bindtap="openDetail">
-      <view class="stub-date">{{item.date}}</view>
-      <view class="stub-title">{{item.statusLabel}}</view>
-      <view class="stub-copy">{{item.selfSentence || item.verdict}}</view>
+  <block wx:if="{{records.length}}">
+    <scroll-view class="month-tabs" scroll-x enable-flex>
+      <button
+        wx:for="{{months}}"
+        wx:key="month"
+        class="month-tab {{item.month == activeMonth ? 'is-active' : ''}}"
+        data-month="{{item.month}}"
+        bindtap="switchMonth"
+      >
+        <text>{{item.month}}</text>
+        <text>{{item.count}} 张</text>
+      </button>
+    </scroll-view>
+
+    <view class="calendar-strip" wx:if="{{activeMonthData}}">
+      <view
+        wx:for="{{activeMonthData.days}}"
+        wx:key="date"
+        class="day-pill {{item.count > 1 ? 'has-many' : ''}}"
+      >
+        <text class="day-number">{{item.day}}</text>
+        <text class="day-count">{{item.count}}</text>
+      </view>
+    </view>
+
+    <view class="archive-list" wx:if="{{activeMonthData}}">
+      <view wx:for="{{activeMonthData.days}}" wx:key="date" class="day-section">
+        <view class="day-heading">
+          <text>{{item.date}}</text>
+          <text wx:if="{{item.count > 1}}">今日存根 x {{item.count}}</text>
+        </view>
+        <stub-card
+          wx:for="{{item.records}}"
+          wx:for-item="record"
+          wx:key="id"
+          record="{{record}}"
+          stack-count="{{item.count}}"
+          bind:open="openDetail"
+        />
+      </view>
     </view>
   </block>
 </view>

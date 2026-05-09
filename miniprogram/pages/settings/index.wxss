@@ -1,16 +1,6 @@
-.section-title {
-  color: #352a22;
-  font-size: 30rpx;
-  font-weight: 700;
-}
-
-.body-text {
-  margin-top: 14rpx;
-  color: #6f5e52;
-  font-size: 26rpx;
-  line-height: 1.7;
-}
-
-.action {
-  margin-top: 24rpx;
+.version-line {
+  margin-top: 30rpx;
+  color: #9a887b;
+  font-size: 23rpx;
+  text-align: center;
 }

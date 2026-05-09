@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "设置与隐私"
+  "navigationBarTitleText": "设置与隐私",
+  "usingComponents": {
+    "privacy-panel": "/components/privacy-panel/index"
+  }
 }

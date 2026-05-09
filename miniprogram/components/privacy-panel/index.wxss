@@ -1,0 +1,35 @@
+.privacy-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 22rpx;
+  margin-top: 28rpx;
+}
+
+.panel-card {
+  padding: 28rpx;
+  border: 1rpx solid rgba(88, 66, 49, 0.12);
+  border-radius: 16rpx;
+  background: rgba(255, 251, 245, 0.86);
+  box-shadow: 0 16rpx 48rpx rgba(104, 73, 48, 0.08);
+}
+
+.panel-title {
+  color: #352a22;
+  font-size: 30rpx;
+  font-weight: 700;
+}
+
+.panel-text {
+  margin-top: 14rpx;
+  color: #6f5e52;
+  font-size: 26rpx;
+  line-height: 1.7;
+}
+
+.clear-button {
+  margin-top: 22rpx;
+  color: #b85c4b;
+  font-size: 26rpx;
+  font-weight: 700;
+  text-align: left;
+}

@@ -29,7 +29,35 @@ function groupRecordsByMonth(records) {
     }));
 }
 
+function buildArchiveMonths(records) {
+  return groupRecordsByMonth(records).map((group) => {
+    const dayMap = group.records.reduce((map, record) => {
+      if (!map[record.date]) map[record.date] = [];
+      map[record.date].push(record);
+      return map;
+    }, {});
+
+    const days = Object.keys(dayMap)
+      .sort()
+      .reverse()
+      .map((date) => ({
+        date,
+        day: date.slice(-2),
+        count: dayMap[date].length,
+        records: dayMap[date],
+      }));
+
+    return {
+      month: group.month,
+      count: group.records.length,
+      days,
+      records: group.records,
+    };
+  });
+}
+
 module.exports = {
+  buildArchiveMonths,
   formatDateKey,
   formatMonthKey,
   groupRecordsByMonth,

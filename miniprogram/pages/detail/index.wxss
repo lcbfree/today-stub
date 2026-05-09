@@ -1,20 +1,65 @@
-.detail-date {
-  color: #8b7b70;
-  font-size: 24rpx;
+.fields-card {
+  display: flex;
+  flex-direction: column;
+  gap: 18rpx;
 }
 
-.detail-title {
-  margin-top: 12rpx;
-  font-size: 36rpx;
-  font-weight: 800;
-}
-
-.detail-copy {
-  margin: 24rpx 0;
+.section-title {
+  color: #352a22;
   font-size: 30rpx;
+  font-weight: 700;
+}
+
+.field-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 28rpx;
+  color: #4b3f36;
+  font-size: 26rpx;
+  line-height: 1.5;
+}
+
+.field-row text:first-child,
+.field-block text:first-child {
+  flex: 0 0 160rpx;
+  color: #8b7b70;
+}
+
+.field-row text:last-child {
+  flex: 1;
+  text-align: right;
+  word-break: break-all;
+}
+
+.field-block {
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+  color: #4b3f36;
+  font-size: 26rpx;
   line-height: 1.6;
 }
 
+.save-message {
+  margin-top: 22rpx;
+  padding: 20rpx 24rpx;
+  border-radius: 14rpx;
+  background: rgba(72, 107, 99, 0.12);
+  color: #486b63;
+  font-size: 25rpx;
+}
+
+.render-canvas {
+  position: fixed;
+  left: -9999px;
+  top: -9999px;
+  pointer-events: none;
+}
+
+.danger {
+  color: #b85c4b;
+}
+
 .action {
-  margin-top: 30rpx;
+  margin-top: 24rpx;
 }

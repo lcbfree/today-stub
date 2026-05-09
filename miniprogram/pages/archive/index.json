@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "存档墙"
+  "navigationBarTitleText": "存档墙",
+  "usingComponents": {
+    "stub-card": "/components/stub-card/index"
+  }
 }

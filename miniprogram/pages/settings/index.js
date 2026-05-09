@@ -1,6 +1,22 @@
-const { clearRecords } = require("../../services/stub-repository");
+const { clearRecords, listRecords } = require("../../services/stub-repository");
 
 Page({
+  data: {
+    recordCount: 0,
+  },
+
+  onShow() {
+    this.refreshRecordCount();
+  },
+
+  refreshRecordCount() {
+    listRecords().then((records) => {
+      this.setData({
+        recordCount: records.length,
+      });
+    });
+  },
+
   clearLocalData() {
     wx.showModal({
       title: "清空本地存根？",
@@ -10,6 +26,7 @@ Page({
       success: (result) => {
         if (!result.confirm) return;
         clearRecords().then(() => {
+          this.refreshRecordCount();
           wx.showToast({
             title: "已清空",
             icon: "success",

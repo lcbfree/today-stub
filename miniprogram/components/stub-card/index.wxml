@@ -1,0 +1,11 @@
+<view wx:if="{{record}}" class="stub-card {{stackCount > 1 ? 'is-stacked' : ''}}" bindtap="openCard">
+  <view class="stub-top">
+    <text class="stub-date">{{record.date}}</text>
+    <text wx:if="{{stackCount > 1}}" class="stub-count">x {{stackCount}}</text>
+  </view>
+  <view class="stub-title">{{record.statusLabel}}</view>
+  <view class="stub-copy">{{record.selfSentence || record.verdict}}</view>
+  <view wx:if="{{record.lifeModules.length}}" class="stub-trace">
+    <text wx:for="{{record.lifeModules}}" wx:key="id">{{item.label}}</text>
+  </view>
+</view>

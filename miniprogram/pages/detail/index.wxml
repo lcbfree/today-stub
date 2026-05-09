@@ -3,13 +3,61 @@
 
   <view wx:if="{{missing}}" class="soft-card">
     <view class="page-subtitle">这张存根已经不在本地了。</view>
+    <button class="ghost-button action" bindtap="goArchive">返回存档墙</button>
   </view>
 
-  <view wx:if="{{record}}" class="soft-card">
-    <view class="detail-date">{{record.date}}</view>
-    <view class="detail-title">{{record.statusLabel}}</view>
-    <view class="detail-copy">{{record.selfSentence || record.verdict}}</view>
-    <view class="muted-text">能量 {{record.energy}} / 情绪 {{record.emotionBalance}}</view>
-    <button class="ghost-button action" bindtap="confirmDelete">删除这张</button>
-  </view>
+  <block wx:if="{{record}}">
+    <receipt-preview record="{{record}}" theme="{{theme}}" layout="{{layout}}" />
+
+    <view wx:if="{{saveMessage}}" class="save-message">{{saveMessage}}</view>
+
+    <view class="soft-card fields-card">
+      <view class="section-title">原始字段</view>
+      <view class="field-row">
+        <text>日期</text>
+        <text>{{record.date}}</text>
+      </view>
+      <view class="field-row">
+        <text>状态</text>
+        <text>{{record.statusLabel}}</text>
+      </view>
+      <view class="field-row">
+        <text>情绪余额</text>
+        <text>{{record.emotionBalance}}</text>
+      </view>
+      <view class="field-row">
+        <text>能量值</text>
+        <text>{{record.energy}}/100</text>
+      </view>
+      <view class="field-block">
+        <text>我写下的今天</text>
+        <text>{{record.selfSentence}}</text>
+      </view>
+      <view wx:if="{{record.proof}}" class="field-block">
+        <text>今日证据</text>
+        <text>{{record.proof}}</text>
+      </view>
+      <view wx:if="{{record.optionalNote}}" class="field-block">
+        <text>补充一点</text>
+        <text>{{record.optionalNote}}</text>
+      </view>
+    </view>
+
+    <view wx:if="{{record.lifeModules.length}}" class="soft-card fields-card">
+      <view class="section-title">生活痕迹</view>
+      <view wx:for="{{record.lifeModules}}" wx:key="id" class="field-row">
+        <text>{{item.label}}</text>
+        <text>{{item.value}}</text>
+      </view>
+    </view>
+
+    <canvas
+      canvas-id="detailReceiptCanvas"
+      class="render-canvas"
+      style="width: {{canvasWidth}}px; height: {{canvasHeight}}px;"
+    ></canvas>
+
+    <button class="primary-button action" loading="{{savingImage}}" bindtap="saveAgain">再次保存图片</button>
+    <button class="ghost-button danger action" bindtap="confirmDelete">删除这张</button>
+  </block>
 </view>

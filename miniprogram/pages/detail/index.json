@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "存根详情"
+  "navigationBarTitleText": "存根详情",
+  "usingComponents": {
+    "receipt-preview": "/components/receipt-preview/index"
+  }
 }
