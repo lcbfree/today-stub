@@ -10,17 +10,35 @@ Page({
   },
 
   onShow() {
-    listRecords().then((records) => {
-      const months = buildArchiveMonths(records);
-      const activeMonth = this.data.activeMonth || (months[0] && months[0].month) || "";
+    this.loadArchive();
+  },
 
-      this.setData({
-        records,
-        months,
-        activeMonth,
-        activeMonthData: months.find((month) => month.month === activeMonth) || months[0] || null,
+  loadArchive() {
+    listRecords()
+      .then((records) => {
+        const months = buildArchiveMonths(records);
+        const monthExists = months.some((month) => month.month === this.data.activeMonth);
+        const activeMonth = monthExists ? this.data.activeMonth : (months[0] && months[0].month) || "";
+
+        this.setData({
+          records,
+          months,
+          activeMonth,
+          activeMonthData: months.find((month) => month.month === activeMonth) || months[0] || null,
+        });
+      })
+      .catch(() => {
+        this.setData({
+          records: [],
+          months: [],
+          activeMonth: "",
+          activeMonthData: null,
+        });
+        wx.showToast({
+          title: "读取失败",
+          icon: "none",
+        });
       });
-    });
   },
 
   openDetail(event) {

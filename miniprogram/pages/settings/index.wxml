@@ -5,4 +5,5 @@
   <privacy-panel record-count="{{recordCount}}" bind:clear="clearLocalData" />
 
   <view class="version-line">今日存根 V1 · 本地优先</view>
+  <view class="safe-bottom"></view>
 </view>

@@ -60,4 +60,5 @@
     <button class="primary-button action" loading="{{savingImage}}" bindtap="saveAgain">再次保存图片</button>
     <button class="ghost-button danger action" bindtap="confirmDelete">删除这张</button>
   </block>
+  <view class="safe-bottom"></view>
 </view>

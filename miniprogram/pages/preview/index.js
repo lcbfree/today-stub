@@ -55,6 +55,7 @@ Page({
 
   switchTheme(event) {
     if (!this.data.record) return;
+    if (this.data.savingImage) return;
     this.setReceiptState(this.data.record, event.currentTarget.dataset.id);
   },
 
@@ -95,20 +96,33 @@ Page({
   saveToArchive() {
     if (!this.data.record) return;
 
-    this.persistRecord().then(() => {
-      const savedPhrase = pickPhrase("saved");
-      this.setData({
-        saved: true,
-        saveStatus: "success",
-        saveMessage: savedPhrase.text,
-        saveHint: "这张存根已经存入本地存档墙。",
-        canOpenSettings: false,
+    this.persistRecord()
+      .then(() => {
+        const savedPhrase = pickPhrase("saved");
+        this.setData({
+          saved: true,
+          saveStatus: "success",
+          saveMessage: savedPhrase.text,
+          saveHint: "这张存根已经存入本地存档墙。",
+          canOpenSettings: false,
+        });
+        wx.showToast({
+          title: "存根已收好",
+          icon: "success",
+        });
+      })
+      .catch(() => {
+        this.setData({
+          saveStatus: "error",
+          saveMessage: "本地存档失败，可以稍后重试。",
+          saveHint: "当前票根还在预览页，不会因为这次失败而消失。",
+          canOpenSettings: false,
+        });
+        wx.showToast({
+          title: "存档失败",
+          icon: "none",
+        });
       });
-      wx.showToast({
-        title: "存根已收好",
-        icon: "success",
-      });
-    });
   },
 
   saveImageAndArchive() {
@@ -154,7 +168,9 @@ Page({
           savingImage: false,
           saveStatus: "error",
           saveMessage: error.message || "保存失败，可以稍后重试。",
-          saveHint: "当前存根内容还在，可以重新保存或仅存入今天。",
+          saveHint: error.phase === "album"
+            ? "当前存根内容还在，可以重新保存或仅存入今天。"
+            : "当前票根还在预览页，不会因为这次失败而消失。",
           canOpenSettings: error.code === "album_auth_denied",
         });
         wx.showToast({
@@ -183,7 +199,7 @@ Page({
   },
 
   goArchive() {
-    wx.navigateTo({
+    wx.redirectTo({
       url: "/pages/archive/index",
     });
   },

@@ -10,11 +10,19 @@ Page({
   },
 
   refreshRecordCount() {
-    listRecords().then((records) => {
-      this.setData({
-        recordCount: records.length,
+    listRecords()
+      .then((records) => {
+        this.setData({
+          recordCount: records.length,
+        });
+      })
+      .catch(() => {
+        this.setData({ recordCount: 0 });
+        wx.showToast({
+          title: "读取失败",
+          icon: "none",
+        });
       });
-    });
   },
 
   clearLocalData() {
@@ -25,13 +33,20 @@ Page({
       confirmColor: "#B85C4B",
       success: (result) => {
         if (!result.confirm) return;
-        clearRecords().then(() => {
-          this.refreshRecordCount();
-          wx.showToast({
-            title: "已清空",
-            icon: "success",
+        clearRecords()
+          .then(() => {
+            this.refreshRecordCount();
+            wx.showToast({
+              title: "已清空",
+              icon: "success",
+            });
+          })
+          .catch(() => {
+            wx.showToast({
+              title: "清空失败",
+              icon: "none",
+            });
           });
-        });
       },
     });
   },

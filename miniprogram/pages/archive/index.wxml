@@ -33,6 +33,11 @@
       </view>
     </view>
 
+    <view wx:if="{{activeMonthData && !activeMonthData.records.length}}" class="soft-card empty-card">
+      <view class="empty-title">这个月还没有存根。</view>
+      <view class="empty-copy">等某一天想留下来的时候，它会出现在这里。</view>
+    </view>
+
     <view class="archive-list" wx:if="{{activeMonthData}}">
       <view wx:for="{{activeMonthData.days}}" wx:key="date" class="day-section">
         <view class="day-heading">
@@ -50,4 +55,5 @@
       </view>
     </view>
   </block>
+  <view class="safe-bottom"></view>
 </view>

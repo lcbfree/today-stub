@@ -28,18 +28,31 @@ Page({
       return;
     }
 
-    getRecord(id).then((record) => {
-      const theme = record ? getTheme(record.themeId) : null;
-      const layout = record ? buildReceiptLayout(record) : null;
+    getRecord(id)
+      .then((record) => {
+        const theme = record ? getTheme(record.themeId) : null;
+        const layout = record ? buildReceiptLayout(record) : null;
 
-      this.setData({
-        record,
-        theme,
-        layout,
-        canvasHeight: layout ? layout.height : 900,
-        missing: !record,
+        this.setData({
+          record,
+          theme,
+          layout,
+          canvasHeight: layout ? layout.height : 900,
+          missing: !record,
+        });
+      })
+      .catch(() => {
+        this.setData({
+          record: null,
+          theme: null,
+          layout: null,
+          missing: true,
+        });
+        wx.showToast({
+          title: "读取失败",
+          icon: "none",
+        });
       });
-    });
   },
 
   saveAgain() {
@@ -89,15 +102,22 @@ Page({
       confirmColor: "#B85C4B",
       success: (result) => {
         if (!result.confirm) return;
-        deleteRecord(this.data.record.id).then(() => {
-          wx.showToast({
-            title: "已删除",
-            icon: "success",
+        deleteRecord(this.data.record.id)
+          .then(() => {
+            wx.showToast({
+              title: "已删除",
+              icon: "success",
+            });
+            wx.navigateBack({
+              fail: () => wx.redirectTo({ url: "/pages/archive/index" }),
+            });
+          })
+          .catch(() => {
+            wx.showToast({
+              title: "删除失败",
+              icon: "none",
+            });
           });
-          wx.navigateBack({
-            fail: () => wx.redirectTo({ url: "/pages/archive/index" }),
-          });
-        });
       },
     });
   },

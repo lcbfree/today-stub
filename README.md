@@ -39,12 +39,21 @@
 
 ## 目录说明
 
+- `miniprogram/`：今日存根 V1 原生微信小程序工程。
 - `docs/product.md`：完整产品探索文档，包含定位、MVP、技术方案、成本、合规、竞品、备选产品等。
 - `docs/handoff-notes.md`：从前期讨论沉淀下来的关键决策与注意事项。
 - `assets/ui-concepts/`：当前生成的 UI 概念图。
 - `assets/ui-concepts/README.md`：UI 概念图索引和每张图的用途说明。
 - `prototype/v1/`：第一版产品原型，包含完整页面 UI 和关键状态。
 - `prototype/v1/today-stub-v1-prototype.png`：当前 v1 原型整页预览图。
+
+## 开发验证
+
+```bash
+npm run validate:v1
+```
+
+微信小程序开发时，用微信开发者工具打开根目录下的 `project.config.json`。
 
 ## 下一步建议
 
