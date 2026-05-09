@@ -1,0 +1,59 @@
+<view
+  wx:if="{{record && theme && layout}}"
+  class="receipt-preview"
+  style="background: {{theme.background}}; color: {{theme.foreground}}; border-color: {{theme.border}};"
+>
+  <view class="receipt-kicker" style="color: {{theme.muted}};">{{layout.header}}</view>
+  <view class="receipt-title">{{layout.title}}</view>
+
+  <view class="receipt-divider" style="border-color: {{theme.divider}};"></view>
+
+  <view wx:for="{{layout.rows}}" wx:key="label" class="receipt-row">
+    <text class="receipt-row-label" style="color: {{theme.muted}};">{{item.label}}</text>
+    <text class="receipt-row-value">{{item.value}}</text>
+  </view>
+
+  <view wx:if="{{layout.lifeModules.length}}" class="receipt-section">
+    <view class="receipt-divider" style="border-color: {{theme.divider}};"></view>
+    <view class="receipt-kicker" style="color: {{theme.muted}};">LIFE TRACE</view>
+    <view wx:for="{{layout.lifeModules}}" wx:key="id" class="receipt-row">
+      <text class="receipt-row-label" style="color: {{theme.muted}};">{{item.label}}</text>
+      <text class="receipt-row-value">{{item.value}}</text>
+    </view>
+  </view>
+
+  <view class="receipt-section">
+    <view class="receipt-divider" style="border-color: {{theme.divider}};"></view>
+    <view class="receipt-kicker" style="color: {{theme.muted}};">我写下的今天</view>
+    <view class="receipt-main-copy">
+      <text wx:for="{{layout.selfSentenceLines}}" wx:key="*this">{{item}}</text>
+    </view>
+  </view>
+
+  <view wx:if="{{layout.proofLines.length}}" class="receipt-section">
+    <view class="receipt-kicker" style="color: {{theme.muted}};">今日证据</view>
+    <view class="receipt-small-copy" style="color: {{theme.muted}};">
+      <text wx:for="{{layout.proofLines}}" wx:key="*this">{{item}}</text>
+    </view>
+  </view>
+
+  <view wx:if="{{layout.optionalNoteLines.length}}" class="receipt-section">
+    <view class="receipt-kicker" style="color: {{theme.muted}};">补充一点</view>
+    <view class="receipt-small-copy" style="color: {{theme.muted}};">
+      <text wx:for="{{layout.optionalNoteLines}}" wx:key="*this">{{item}}</text>
+    </view>
+  </view>
+
+  <view class="receipt-section">
+    <view class="receipt-divider" style="border-color: {{theme.divider}};"></view>
+    <view class="receipt-kicker" style="color: {{theme.muted}};">候选短语</view>
+    <view class="receipt-verdict">
+      <text wx:for="{{layout.verdictLines}}" wx:key="*this">{{item}}</text>
+    </view>
+  </view>
+
+  <view class="receipt-bottom">
+    <view class="receipt-stamp" style="border-color: {{theme.accent}}; color: {{theme.accent}};">{{layout.stampLabel}}</view>
+    <view class="receipt-object" style="color: {{theme.muted}};">{{layout.objectLabel}}</view>
+  </view>
+</view>

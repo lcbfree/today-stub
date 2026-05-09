@@ -1,38 +1,31 @@
 <view class="page-shell preview-page">
   <view class="page-title">票根预览</view>
-  <view class="page-subtitle">先放一个可运行预览壳，后面接入正式票根渲染。</view>
+  <view class="page-subtitle">确认今天被怎样收好。</view>
 
-  <view class="receipt-card" wx:if="{{record}}">
-    <view class="receipt-kicker">DAILY LIFE STUB</view>
-    <view class="receipt-title">今日存根</view>
-    <view class="receipt-row">
-      <text>日期</text>
-      <text>{{record.date}}</text>
-    </view>
-    <view class="receipt-row">
-      <text>状态</text>
-      <text>{{record.statusLabel}}</text>
-    </view>
-    <view class="receipt-row">
-      <text>情绪</text>
-      <text>{{record.emotionBalance}}</text>
-    </view>
-    <view class="receipt-row">
-      <text>能量</text>
-      <text>{{record.energy}}/100</text>
-    </view>
-    <view wx:if="{{record.lifeModules.length}}" class="trace-block">
-      <view class="receipt-kicker">LIFE TRACE</view>
-      <view wx:for="{{record.lifeModules}}" wx:key="id" class="receipt-row">
-        <text>{{item.label}}</text>
-        <text>{{item.value}}</text>
-      </view>
-    </view>
-    <view class="receipt-copy">{{record.selfSentence || record.verdict}}</view>
-    <view wx:if="{{record.proof}}" class="receipt-proof">{{record.proof}}</view>
-    <view class="receipt-stamp">{{record.verdict}}</view>
+  <view class="theme-tabs">
+    <button
+      wx:for="{{themes}}"
+      wx:key="id"
+      class="theme-tab {{item.id == theme.id ? 'is-active' : ''}}"
+      data-id="{{item.id}}"
+      bindtap="switchTheme"
+    >
+      {{item.label}}
+    </button>
   </view>
 
+  <receipt-preview record="{{record}}" theme="{{theme}}" layout="{{layout}}" />
+
+  <view wx:if="{{renderedImagePath}}" class="render-note">已生成临时图片，可用于下一步保存相册。</view>
+  <view wx:if="{{renderError}}" class="render-error">{{renderError}}</view>
+
+  <canvas
+    canvas-id="receiptCanvas"
+    class="render-canvas"
+    style="width: {{canvasWidth}}px; height: {{canvasHeight}}px;"
+  ></canvas>
+
+  <button class="ghost-button action" bindtap="renderImage">生成图片</button>
   <button class="primary-button action" bindtap="saveToArchive">存入今天</button>
   <button class="ghost-button action" bindtap="goArchive">去存档墙</button>
 </view>

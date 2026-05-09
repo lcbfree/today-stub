@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "票根预览"
+  "navigationBarTitleText": "票根预览",
+  "usingComponents": {
+    "receipt-preview": "/components/receipt-preview/index"
+  }
 }
