@@ -26,6 +26,13 @@
   ></canvas>
 
   <button class="ghost-button action" bindtap="renderImage">生成图片</button>
-  <button class="primary-button action" bindtap="saveToArchive">存入今天</button>
+  <button class="primary-button action" loading="{{savingImage}}" bindtap="saveImageAndArchive">保存图片并存入今天</button>
+  <button class="ghost-button action" bindtap="saveToArchive">仅存入今天</button>
   <button class="ghost-button action" bindtap="goArchive">去存档墙</button>
+
+  <view wx:if="{{saveStatus}}" class="save-feedback {{saveStatus == 'success' ? 'is-success' : 'is-error'}}">
+    <view class="save-message">{{saveMessage}}</view>
+    <view class="save-hint">{{saveHint}}</view>
+    <button wx:if="{{canOpenSettings}}" class="settings-button" bindtap="openSettingsForAlbum">打开权限设置</button>
+  </view>
 </view>

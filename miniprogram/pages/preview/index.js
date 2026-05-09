@@ -1,5 +1,6 @@
-const { getTheme, getThemes } = require("../../config/index");
+const { getObject, getTheme, getThemes, pickPhrase } = require("../../config/index");
 const { createInitialDraft, generateRecord } = require("../../services/draft-service");
+const { openAlbumSettings, saveReceiptImage } = require("../../services/image-export-service");
 const { getPreviewRecord } = require("../../services/preview-session");
 const { buildReceiptLayout } = require("../../services/receipt-layout");
 const { renderReceiptToImage } = require("../../services/receipt-renderer");
@@ -16,6 +17,11 @@ Page({
     canvasHeight: 900,
     renderedImagePath: "",
     renderError: "",
+    savingImage: false,
+    saveStatus: "",
+    saveMessage: "",
+    saveHint: "",
+    canOpenSettings: false,
     saved: false,
   },
 
@@ -40,6 +46,10 @@ Page({
       canvasHeight: layout.height,
       renderedImagePath: "",
       renderError: "",
+      saveStatus: "",
+      saveMessage: "",
+      saveHint: "",
+      canOpenSettings: false,
     });
   },
 
@@ -85,11 +95,89 @@ Page({
   saveToArchive() {
     if (!this.data.record) return;
 
-    saveRecord(this.data.record).then(() => {
-      this.setData({ saved: true });
+    this.persistRecord().then(() => {
+      const savedPhrase = pickPhrase("saved");
+      this.setData({
+        saved: true,
+        saveStatus: "success",
+        saveMessage: savedPhrase.text,
+        saveHint: "这张存根已经存入本地存档墙。",
+        canOpenSettings: false,
+      });
       wx.showToast({
         title: "存根已收好",
         icon: "success",
+      });
+    });
+  },
+
+  saveImageAndArchive() {
+    if (!this.data.record || this.data.savingImage) return;
+
+    this.setData({
+      savingImage: true,
+      renderError: "",
+      saveStatus: "",
+      saveMessage: "",
+      saveHint: "",
+      canOpenSettings: false,
+    });
+
+    saveReceiptImage({
+      page: this,
+      canvasId: "receiptCanvas",
+      record: this.data.record,
+      theme: this.data.theme,
+      layout: this.data.layout,
+      tempFilePath: this.data.renderedImagePath,
+    })
+      .then((result) => this.persistRecord().then(() => result))
+      .then((result) => {
+        const savedPhrase = pickPhrase("saved");
+        const object = getObject(this.data.record.objectId);
+
+        this.setData({
+          savingImage: false,
+          saved: true,
+          renderedImagePath: result.tempFilePath,
+          saveStatus: "success",
+          saveMessage: savedPhrase.text,
+          saveHint: `图片已保存到相册，${object.label}也被夹进今天。可以自行发到微信状态、朋友圈或私聊。`,
+        });
+        wx.showToast({
+          title: "已保存",
+          icon: "success",
+        });
+      })
+      .catch((error) => {
+        this.setData({
+          savingImage: false,
+          saveStatus: "error",
+          saveMessage: error.message || "保存失败，可以稍后重试。",
+          saveHint: "当前存根内容还在，可以重新保存或仅存入今天。",
+          canOpenSettings: error.code === "album_auth_denied",
+        });
+        wx.showToast({
+          title: "保存失败",
+          icon: "none",
+        });
+      });
+  },
+
+  persistRecord() {
+    return saveRecord(this.data.record).then((record) => {
+      this.setData({
+        record,
+      });
+      return record;
+    });
+  },
+
+  openSettingsForAlbum() {
+    openAlbumSettings().catch(() => {
+      wx.showToast({
+        title: "无法打开设置",
+        icon: "none",
       });
     });
   },
